@@ -32,24 +32,16 @@ UserSchema.pre('save', function ( next ){
 
 })
 
-// bcrypt.compare('dsdass', hash,  function( err, res ){
-//     // if( err ) { return calllback(err)};
-//     console.log(res);
-// });
-
-
-// UserSchema.methods.comparePassword = function( candidatePassword, calllback ){
-    // bcrypt.compare(hash, this.password, function( err, res ){
-    //     // if( err ) { return calllback(err)};
-    //     console.log(res);
-    //     // calllback(null, isMatch)
-    // })
-// }
+//compare password
+UserSchema.methods.comparePassword = function( candidatePassword, calllback ){
+    bcrypt.compare(candidatePassword, this.password, function( err, isMatch ){
+        if( err ) { return calllback(err)};
+        calllback(null, isMatch)
+    })
+}
 
 
 // Create a modle
 const User = mongoose.model('userAuthenticaton', UserSchema);
-
-
 
 module.exports = User;
